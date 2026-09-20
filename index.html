@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GrokBot — First Principles & Installation Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #090b10;
+      --bg-card: rgba(18, 24, 38, 0.75);
+      --bg-card-hover: rgba(26, 35, 54, 0.85);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(0, 240, 255, 0.35);
+      --primary: #00f0ff;
+      --primary-dim: rgba(0, 240, 255, 0.15);
+      --accent: #a855f7;
+      --accent-dim: rgba(168, 85, 247, 0.15);
+      --x-color: #1da1f2;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Fira Code', monospace;
+      --success: #10b981;
+      --warning: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 85% 65%, rgba(168, 85, 247, 0.06) 0%, transparent 40%),
+        linear-gradient(to bottom, #090b10, #0d111a);
+      min-height: 100vh;
+    }
+
+    /* Top Sticky Navigation Bar */
+    header.top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(9, 11, 16, 0.85);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+      color: #090b10;
+      font-size: 1.1rem;
+      font-weight: 900;
+    }
+
+    .brand span.tag {
+      font-size: 0.65rem;
+      padding: 2px 7px;
+      background: var(--primary-dim);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      border-radius: 20px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    nav.bloom-menu {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.35rem;
+      border-radius: 30px;
+      border: 1px solid var(--border-color);
+    }
+
+    nav.bloom-menu a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 0.45rem 1rem;
+      border-radius: 20px;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    nav.bloom-menu a:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    nav.bloom-menu a.active {
+      background: linear-gradient(135deg, var(--primary-dim), var(--accent-dim));
+      color: var(--primary);
+      border: 1px solid var(--border-glow);
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.2);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-install {
+      background: linear-gradient(135deg, var(--primary), #00b4d8);
+      color: #040810;
+      padding: 0.5rem 1.15rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 16px rgba(0, 240, 255, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-install:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 24px rgba(0, 240, 255, 0.55);
+      background: #38f8ff;
+    }
+
+    /* Container Layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 4rem 1rem 3rem;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 1rem;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: 3.25rem;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      background: linear-gradient(135deg, #ffffff 30%, #9ca3af 70%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0 auto 2rem;
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      line-height: 1.7;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.65rem 1.3rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Section Cards & Layout */
+    .section-block {
+      margin-top: 5rem;
+      scroll-margin-top: 90px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .bloom-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .pill-remember { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
+    .pill-understand { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .pill-analyse { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .pill-evaluate { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
+    .pill-create { background: rgba(0, 240, 255, 0.2); color: #22d3ee; border: 1px solid rgba(0, 240, 255, 0.4); }
+
+    .section-header h2 {
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 600px;
+    }
+
+    /* Cards Grid */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.6rem;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(0, 240, 255, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px -3px rgba(0, 240, 255, 0.1);
+    }
+
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.6rem;
+      color: #fff;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    /* Code Blocks */
+    .code-box {
+      background: #06080d;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      margin: 1rem 0;
+      position: relative;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      overflow: hidden;
+    }
+
+    .code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.45rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .code-body {
+      padding: 1rem;
+      overflow-x: auto;
+      color: #d1d5db;
+      line-height: 1.5;
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      border-radius: 5px;
+      padding: 3px 8px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: var(--primary);
+      color: #000;
+      border-color: var(--primary);
+    }
+
+    /* Syntax colors */
+    .c-kw { color: #f43f5e; font-weight: 600; }
+    .c-str { color: #34d399; }
+    .c-fn { color: #60a5fa; }
+    .c-comm { color: #6b7280; font-style: italic; }
+    .c-var { color: #fbbf24; }
+
+    /* Interactive Comparison Table */
+    .table-container {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      margin: 1.5rem 0;
+    }
+
+    table.comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    table.comparison-table th {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 1rem 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    table.comparison-table td {
+      padding: 0.9rem 1.2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-muted);
+    }
+
+    table.comparison-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-main);
+    }
+
+    table.comparison-table .highlight-col {
+      background: rgba(0, 240, 255, 0.04);
+      border-left: 1px solid rgba(0, 240, 255, 0.15);
+      border-right: 1px solid rgba(0, 240, 255, 0.15);
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .tag-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .badge-win { background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .badge-mid { background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .badge-low { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.4); }
+
+    /* Interactive Simulator Terminal */
+    .terminal-window {
+      background: #080b11;
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      border-radius: 12px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 240, 255, 0.1);
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+
+    .terminal-topbar {
+      background: #111624;
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+
+    .terminal-title {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .terminal-screen {
+      padding: 1.5rem;
+      min-height: 280px;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: #e5e7eb;
+      line-height: 1.6;
+    }
+
+    .prompt-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .preset-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--primary);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .preset-btn:hover {
+      background: var(--primary-dim);
+      border-color: var(--primary);
+    }
+
+    .terminal-input-group {
+      display: flex;
+      gap: 0.75rem;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .terminal-input-group input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      flex: 1;
+    }
+
+    .terminal-input-group button {
+      background: var(--primary);
+      color: #040810;
+      border: none;
+      font-weight: 700;
+      padding: 0.35rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+    }
+
+    /* Decision Evaluator Interactive Tool */
+    .eval-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .eval-question {
+      margin-bottom: 1.2rem;
+    }
+
+    .eval-question label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #f3f4f6;
+    }
+
+    .eval-options {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .eval-opt {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.85rem;
+    }
+
+    .eval-opt.selected {
+      background: var(--primary-dim);
+      border-color: var(--primary);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .eval-result-card {
+      margin-top: 1.5rem;
+      padding: 1.25rem;
+      border-radius: 10px;
+      background: rgba(0, 240, 255, 0.05);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      display: none;
+    }
+
+    /* Steps Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -2rem;
+      top: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #090b10;
+      border: 2px solid var(--primary);
+      box-shadow: 0 0 10px var(--primary);
+    }
+
+    .timeline-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 3rem 1.5rem;
+      margin-top: 6rem;
+      text-align: center;
+      background: #06080d;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 900px) {
+      header.top-nav {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+      }
+      nav.bloom-menu {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation Bar (Bloom's Taxonomy) -->
+  <header class="top-nav">
+    <a href="#" class="brand">
+      <div class="brand-icon">⚡</div>
+      <span>GrokBot</span>
+      <span class="tag">First Principles</span>
+    </a>
+
+    <nav class="bloom-menu" id="nav-links">
+      <a href="#remember" class="nav-item active"><span class="bloom-pill pill-remember" style="padding: 1px 6px; font-size: 0.65rem;">1</span> Remember</a>
+      <a href="#understand" class="nav-item"><span class="bloom-pill pill-understand" style="padding: 1px 6px; font-size: 0.65rem;">2</span> Understand</a>
+      <a href="#analyse" class="nav-item"><span class="bloom-pill pill-analyse" style="padding: 1px 6px; font-size: 0.65rem;">3</span> Analyse</a>
+      <a href="#evaluate" class="nav-item"><span class="bloom-pill pill-evaluate" style="padding: 1px 6px; font-size: 0.65rem;">4</span> Evaluate</a>
+      <a href="#create" class="nav-item"><span class="bloom-pill pill-create" style="padding: 1px 6px; font-size: 0.65rem;">5</span> Create</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="#create" class="btn-install">
+        <span>⚡ Install Bot</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-badge">
+        <span>🧠 Bloom's Taxonomy Cognitive Hierarchy</span>
+        <span>•</span>
+        <span>xAI Grok Ecosystem</span>
+      </div>
+      <h1>First Principles GrokBot Guide</h1>
+      <p>
+        Deconstruct xAI's real-time conversational agent from absolute ground truth physics and epistemology. Learn why it exists, what makes it radically unique, and build your own autonomous GrokBot.
+      </p>
+      <div class="hero-buttons">
+        <a href="#create" class="btn-install" style="font-size: 0.95rem; padding: 0.65rem 1.4rem;">🚀 Quick Install GrokBot</a>
+        <a href="#understand" class="btn-secondary">🔭 First Principles Breakdown</a>
+      </div>
+    </section>
+
+    <!-- SECTION 1: REMEMBER -->
+    <section id="remember" class="section-block">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="bloom-pill pill-remember">Bloom Level 1</span>
+          <h2>Remember — Foundational Primitives & Recall</h2>
+        </div>
+        <div class="section-subtitle">Recall fundamental terms, definitions, parameters, and architecture prerequisites.</div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <h3>What is GrokBot?</h3>
+          <p>
+            An autonomous conversational agent powered by <strong>xAI's Grok Large Language Models</strong> (Grok-2 / Grok-2-mini / Grok-vision). It fuses massive reasoning parameter weights with a live telemetry pipeline from the X (formerly Twitter) platform.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🌐</div>
+          <h3>The xAI Base Endpoint</h3>
+          <p>
+            xAI provides an OpenAI-compatible REST API at:
+            <br>
+            <code style="color: var(--primary); font-family: var(--font-mono); font-size: 0.8rem; background: rgba(0,0,0,0.4); padding: 2px 5px; border-radius: 4px; display:inline-block; margin-top: 5px;">https://api.x.ai/v1</code>
+            <br>
+            Authentication occurs via bearer token: <code style="color: #fbbf24;">XAI_API_KEY</code>.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">⚙️</div>
+          <h3>Core Primitives</h3>
+          <p>
+            • <strong>Model IDs:</strong> <code>grok-2-latest</code>, <code>grok-2-mini</code><br>
+            • <strong>Context Window:</strong> 128,000+ tokens<br>
+            • <strong>Streaming:</strong> Server-Sent Events (SSE)<br>
+            • <strong>Function Calling:</strong> Structured JSON Tool Calling
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Command Recall -->
+      <div class="card" style="margin-top: 1rem;">
+        <h3 style="display:flex; align-items:center; gap: 0.5rem;">
+          <span>📋</span> Prerequisite Commands Recall
+        </h3>
+        <p style="margin-bottom: 0.75rem;">Run these three fundamental commands to verify your Python environment before launching GrokBot:</p>
+        <div class="code-box">
+          <div class="code-header">
+            <span>Terminal Prerequisite Check</span>
+            <button class="copy-btn" onclick="copyCode('recall-code')">Copy</button>
+          </div>
+          <div class="code-body" id="recall-code">
+python3 --version          <span class="c-comm"># Requires Python 3.10+</span>
+python3 -m venv venv       <span class="c-comm"># Create isolated sandbox environment</span>
+source venv/bin/activate   <span class="c-comm"># Activate on macOS / Linux</span>
+pip install --upgrade openai python-dotenv requests
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: UNDERSTAND -->
+    <section id="understand" class="section-block">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="bloom-pill pill-understand">Bloom Level 2</span>
+          <h2>Understand — First Principles Deconstruction</h2>
+        </div>
+        <div class="section-subtitle">Break down GrokBot into its irreducible truths rather than reasoning by analogy.</div>
+      </div>
+
+      <div class="card" style="margin-bottom: 1.5rem; border-left: 4px solid var(--primary);">
+        <h3>What is First Principles Thinking in AI?</h3>
+        <p>
+          Reasoning by analogy asks: <em>"How do others build chatbots? They take a frozen pretrained model, add strict safety refusals, and wrap it in a search scraper."</em><br>
+          <strong>Reasoning from first principles asks:</strong> <em>"What is the fundamental goal of an intelligent agent? To perceive real-world state changes at minimum latency, model causal dynamics truthfully, and communicate unfiltered reality to maximize human understanding."</em>
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">⏱️</div>
+          <h3>Axiom 1: The Zero-Horizon Information Latency</h3>
+          <p>
+            Static LLM weights have an <strong>epistemic cut-off</strong>. Search engine scrapers suffer from 12–48 hour indexing lag. 
+            Grok connects directly to the <strong>X Real-Time Ingestion Firehose</strong>, processing eyewitness posts, financial disclosures, and scientific announcements seconds after they happen.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🎯</div>
+          <h3>Axiom 2: Epistemic Truth vs Social Consensus</h3>
+          <p>
+            Most modern LLMs suffer from a heavy <strong>"Alignment Tax"</strong>—censoring truths that conflict with corporate PR. 
+            Grok's objective function is explicitly designed for maximum scientific rigor, mathematical honesty, and minimal preachy lecturing.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🚀</div>
+          <h3>Axiom 3: The Colossus Compute Scaling Law</h3>
+          <p>
+            Grok is trained on xAI's <strong>Memphis Colossus Cluster</strong> (100,000+ liquid-cooled NVIDIA H100/H200 GPUs in a single RDMA fabric). 
+            Massive compute concentration eliminates training bottlenecks and produces superior mathematical and coding intuition.
+          </p>
+        </div>
+      </div>
+
+      <!-- First Principles Flow Diagram -->
+      <div class="card" style="margin-top: 1.5rem;">
+        <h3>First Principles Architecture: From Raw Signal to Verified Output</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; text-align: center;">
+          <div style="flex: 1; min-width: 180px; background: rgba(255,255,255,0.03); padding: 1.2rem; border-radius: 10px; border: 1px solid var(--border-color);">
+            <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">🛰️</div>
+            <strong style="color: var(--primary);">1. Ground Truth Event</strong>
+            <p style="font-size: 0.8rem; margin-top: 0.3rem;">Real-world occurrence emits data packets onto X platform.</p>
+          </div>
+          <div style="color: var(--text-dim); font-size: 1.5rem;">➔</div>
+          <div style="flex: 1; min-width: 180px; background: rgba(255,255,255,0.03); padding: 1.2rem; border-radius: 10px; border: 1px solid var(--border-color);">
+            <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">⚡</div>
+            <strong style="color: var(--accent);">2. Firehose Ingestion</strong>
+            <p style="font-size: 0.8rem; margin-top: 0.3rem;">Zero-lag vector tokenization & community consensus ranking.</p>
+          </div>
+          <div style="color: var(--text-dim); font-size: 1.5rem;">➔</div>
+          <div style="flex: 1; min-width: 180px; background: rgba(255,255,255,0.03); padding: 1.2rem; border-radius: 10px; border: 1px solid var(--border-color);">
+            <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">🧠</div>
+            <strong style="color: #60a5fa;">3. Grok-2 Engine</strong>
+            <p style="font-size: 0.8rem; margin-top: 0.3rem;">128k context reasoning with Hitchhiker's Guide wit & rigor.</p>
+          </div>
+          <div style="color: var(--text-dim); font-size: 1.5rem;">➔</div>
+          <div style="flex: 1; min-width: 180px; background: rgba(255,255,255,0.03); padding: 1.2rem; border-radius: 10px; border: 1px solid var(--border-color);">
+            <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">💎</div>
+            <strong style="color: var(--success);">4. Actionable Truth</strong>
+            <p style="font-size: 0.8rem; margin-top: 0.3rem;">Direct answers delivered without corporate lecturing.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: ANALYSE -->
+    <section id="analyse" class="section-block">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="bloom-pill pill-analyse">Bloom Level 3</span>
+          <h2>Analyse — Why is GrokBot Radically Unique?</h2>
+        </div>
+        <div class="section-subtitle">Examine the differentiation factors, competitive comparisons, and architectural breakdown.</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>1. Live Alpha & Breaking Signals</h3>
+          <p>
+            When a vulnerability is disclosed, a crypto protocol exploited, or a regulatory filing submitted, discussions happen on X hours before news outlets publish summaries. GrokBot indexes the raw sentiment, code snippets, and counter-arguments in real time.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>2. Zero "Preachiness" & Rebellion Mode</h3>
+          <p>
+            Traditional bots are trained with hyper-cautious refusal filters that frequently misinterpret benign technical queries as hazards. GrokBot answers directly, incorporates dry sarcastic wit when requested, and treats the user as an autonomous adult.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>3. Native Multi-Modal Grounding</h3>
+          <p>
+            Grok-2 integrates multimodal visual understanding directly. It can ingest screenshots of code, complex charts, or satellite imagery from posts, analyzing the image semantics alongside text commentary.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>4. OpenAI API Drop-in Compatibility</h3>
+          <p>
+            Unlike proprietary bespoke protocols, xAI built Grok to adhere to standard OpenAI REST specifications. You can switch any existing agent framework (LangChain, AutoGen, LlamaIndex, LiteLLM) simply by pointing <code>base_url</code> to xAI.
+          </p>
+        </div>
+      </div>
+
+      <!-- Comparative Analysis Table -->
+      <h3 style="margin: 2rem 0 0.75rem;">Comparative Analysis Matrix</h3>
+      <div class="table-container">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Feature / Dimension</th>
+              <th class="highlight-col">⚡ GrokBot (xAI)</th>
+              <th>Standard LLM (ChatGPT / Claude)</th>
+              <th>Search Synthesizers (Perplexity)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Real-Time Data Source</strong></td>
+              <td class="highlight-col"><span class="tag-badge badge-win">X Live Firehose (Seconds)</span></td>
+              <td><span class="tag-badge badge-low">Static Checkpoint + Web Scraping</span></td>
+              <td><span class="tag-badge badge-mid">Google/Bing Search Index</span></td>
+            </tr>
+            <tr>
+              <td><strong>Information Latency</strong></td>
+              <td class="highlight-col"><span class="tag-badge badge-win">&lt; 30 Seconds</span></td>
+              <td><span class="tag-badge badge-low">Hours to Weeks</span></td>
+              <td><span class="tag-badge badge-mid">1 to 12 Hours</span></td>
+            </tr>
+            <tr>
+              <td><strong>Refusal / Preachiness Rate</strong></td>
+              <td class="highlight-col"><span class="tag-badge badge-win">Ultra Low (Truth-Centric)</span></td>
+              <td><span class="tag-badge badge-low">High (Conservative Safety Filters)</span></td>
+              <td><span class="tag-badge badge-mid">Moderate</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tone & Humor</strong></td>
+              <td class="highlight-col"><span class="tag-badge badge-win">Witty, Edgy, Hitchhiker Style</span></td>
+              <td><span class="tag-badge badge-mid">Polite, Corporate Neutral</span></td>
+              <td><span class="tag-badge badge-mid">Concise Reference Style</span></td>
+            </tr>
+            <tr>
+              <td><strong>Context Window</strong></td>
+              <td class="highlight-col"><span class="tag-badge badge-win">128,000 Tokens</span></td>
+              <td><span class="tag-badge badge-win">128k - 200k Tokens</span></td>
+              <td><span class="tag-badge badge-mid">32k - 64k Tokens</span></td>
+            </tr>
+            <tr>
+              <td><strong>API Drop-in Integration</strong></td>
+              <td class="highlight-col"><span class="tag-badge badge-win">OpenAI Compatible (base_url swap)</span></td>
+              <td><span class="tag-badge badge-win">Native SDKs</span></td>
+              <td><span class="tag-badge badge-mid">Proprietary REST</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 4: EVALUATE -->
+    <section id="evaluate" class="section-block">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="bloom-pill pill-evaluate">Bloom Level 4</span>
+          <h2>Evaluate — Why Use GrokBot? Decision Framework</h2>
+        </div>
+        <div class="section-subtitle">Make an informed engineering decision: assess trade-offs, ROI, and ideal use cases.</div>
+      </div>
+
+      <div class="grid-2">
+        <!-- Pros -->
+        <div class="card" style="border-top: 3px solid var(--success);">
+          <h3 style="color: var(--success); display:flex; align-items:center; gap: 0.5rem;">
+            <span>✅</span> When GrokBot is Irreplaceable
+          </h3>
+          <ul style="padding-left: 1.25rem; color: var(--text-muted); font-size: 0.92rem; line-height: 1.8;">
+            <li><strong>Live Market & Crypto Arbitrage:</strong> Tracking instant developer sentiment, exploit announcements, and token sentiment shifts.</li>
+            <li><strong>Technical Deep-Dives:</strong> Asking direct engineering questions without receiving pre-canned safety disclaimers.</li>
+            <li><strong>Autonomous Social Media Agents:</strong> Interacting dynamically on platforms where fresh cultural context and humor are paramount.</li>
+            <li><strong>First-Principles Scientific Deduction:</strong> Cross-validating physics, code logic, and mathematical proofs.</li>
+          </ul>
+        </div>
+
+        <!-- Trade-offs -->
+        <div class="card" style="border-top: 3px solid var(--warning);">
+          <h3 style="color: var(--warning); display:flex; align-items:center; gap: 0.5rem;">
+            <span>⚠️</span> Engineering Trade-offs & Limitations
+          </h3>
+          <ul style="padding-left: 1.25rem; color: var(--text-muted); font-size: 0.92rem; line-height: 1.8;">
+            <li><strong>API Quota Costs:</strong> xAI API credits must be purchased via <code>console.x.ai</code>.</li>
+            <li><strong>Noise in Live Social Ingestion:</strong> Social media feeds contain rumors; bot verification requires prompt grounding.</li>
+            <li><strong>Sarcastic Tone Management:</strong> In enterprise production apps, system prompts must explicitly mandate formal tone if humor is unwanted.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Interactive Evaluator Tool -->
+      <div class="eval-box">
+        <h3 style="margin-bottom: 0.5rem;">🎯 Interactive Suitability Evaluator</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+          Select your project attributes to evaluate if GrokBot is the optimal choice for your workload:
+        </p>
+
+        <div class="eval-question">
+          <label>1. Does your application require real-time / breaking information (< 1 hour)?</label>
+          <div class="eval-options" id="q1">
+            <button class="eval-opt" onclick="selectEval(this, 'q1', true)">Yes (Crucial)</button>
+            <button class="eval-opt" onclick="selectEval(this, 'q1', false)">No (Static knowledge is fine)</button>
+          </div>
+        </div>
+
+        <div class="eval-question">
+          <label>2. What is your requirement regarding censorship & tone?</label>
+          <div class="eval-options" id="q2">
+            <button class="eval-opt" onclick="selectEval(this, 'q2', true)">Uncensored / witty / candid first principles</button>
+            <button class="eval-opt" onclick="selectEval(this, 'q2', false)">Strict formal corporate neutrality only</button>
+          </div>
+        </div>
+
+        <div class="eval-question">
+          <label>3. Do you want easy drop-in compatibility with existing OpenAI-based code?</label>
+          <div class="eval-options" id="q3">
+            <button class="eval-opt" onclick="selectEval(this, 'q3', true)">Yes (Seamless SDK reuse)</button>
+            <button class="eval-opt" onclick="selectEval(this, 'q3', false)">Doesn't matter</button>
+          </div>
+        </div>
+
+        <button class="btn-install" style="margin-top: 1rem; cursor:pointer; border:none;" onclick="calculateEval()">
+          ⚡ Calculate GrokBot Fit Score
+        </button>
+
+        <div class="eval-result-card" id="eval-result">
+          <!-- Dynamic JS Output -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: CREATE -->
+    <section id="create" class="section-block">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="bloom-pill pill-create">Bloom Level 5</span>
+          <h2>Create — Install & Run Your GrokBot PoC</h2>
+        </div>
+        <div class="section-subtitle">Hands-on installation, environment configuration, and runnable Python PoC application.</div>
+      </div>
+
+      <div class="timeline">
+        <!-- Step 1 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-title">Step 1: Clone Repository & Create Virtual Environment</div>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Initialize clean Python 3.10+ isolation to prevent dependency conflicts:</p>
+          <div class="code-box">
+            <div class="code-header">
+              <span>Bash — Terminal Setup</span>
+              <button class="copy-btn" onclick="copyCode('step1-code')">Copy</button>
+            </div>
+            <div class="code-body" id="step1-code">
+cd /Users/rifaterdemsahin/grokbot
+python3 -m venv venv
+source venv/bin/activate
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-title">Step 2: Install OpenAI / xAI Compatible Dependencies</div>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Install the lightweight client libraries:</p>
+          <div class="code-box">
+            <div class="code-header">
+              <span>Bash — Install Pip Packages</span>
+              <button class="copy-btn" onclick="copyCode('step2-code')">Copy</button>
+            </div>
+            <div class="code-body" id="step2-code">
+pip install openai python-dotenv rich requests
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-title">Step 3: Setup .env Configuration</div>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Obtain your API Key from <a href="https://console.x.ai" target="_blank" style="color: var(--primary);">console.x.ai</a> and store it securely:</p>
+          <div class="code-box">
+            <div class="code-header">
+              <span>.env Configuration</span>
+              <button class="copy-btn" onclick="copyCode('step3-code')">Copy</button>
+            </div>
+            <div class="code-body" id="step3-code">
+XAI_API_KEY="xai-your-api-key-here"
+XAI_BASE_URL="https://api.x.ai/v1"
+GROK_MODEL="grok-2-latest"
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-title">Step 4: Create the Runnable GrokBot Application (`grok_bot.py`)</div>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">A complete, first-principles streaming GrokBot with system prompt personality control:</p>
+          <div class="code-box">
+            <div class="code-header">
+              <span>Python 3 — grok_bot.py</span>
+              <button class="copy-btn" onclick="copyCode('step4-code')">Copy</button>
+            </div>
+            <div class="code-body" id="step4-code">
+<span class="c-kw">import</span> os
+<span class="c-kw">import</span> sys
+<span class="c-kw">from</span> dotenv <span class="c-kw">import</span> load_dotenv
+<span class="c-kw">from</span> openai <span class="c-kw">import</span> OpenAI
+
+<span class="c-comm"># 1. Load configuration from environment</span>
+load_dotenv()
+api_key = os.getenv(<span class="c-str">"XAI_API_KEY"</span>)
+
+<span class="c-kw">if</span> <span class="c-kw">not</span> api_key <span class="c-kw">or</span> api_key == <span class="c-str">"xai-your-api-key-here"</span>:
+    <span class="c-fn">print</span>(<span class="c-str">"⚠️ Please set XAI_API_KEY in your .env file or environment."</span>)
+    sys.exit(1)
+
+<span class="c-comm"># 2. Initialize xAI client via OpenAI standard protocol</span>
+client = OpenAI(
+    api_key=api_key,
+    base_url=<span class="c-str">"https://api.x.ai/v1"</span>,
+)
+
+<span class="c-comm"># 3. Define First Principles System Prompt</span>
+SYSTEM_PROMPT = <span class="c-str">"""You are GrokBot, an AI inspired by Hitchhiker's Guide to the Galaxy.
+You reason strictly from first principles.
+Break down assumptions, eliminate corporate fluff, and deliver witty, mathematically sound, empirical answers."""</span>
+
+<span class="c-kw">def</span> <span class="c-fn">ask_grok</span>(prompt: str):
+    <span class="c-fn">print</span>(<span class="c-str">f"\n🤖 GrokBot is thinking...\n"</span>)
+    stream = client.chat.completions.create(
+        model=os.getenv(<span class="c-str">"GROK_MODEL"</span>, <span class="c-str">"grok-2-latest"</span>),
+        messages=[
+            {<span class="c-str">"role"</span>: <span class="c-str">"system"</span>, <span class="c-str">"content"</span>: SYSTEM_PROMPT},
+            {<span class="c-str">"role"</span>: <span class="c-str">"user"</span>, <span class="c-str">"content"</span>: prompt}
+        ],
+        temperature=0.7,
+        stream=True,
+    )
+    
+    <span class="c-kw">for</span> chunk <span class="c-kw">in</span> stream:
+        delta = chunk.choices[0].delta.content <span class="c-kw">or</span> <span class="c-str">""</span>
+        sys.stdout.write(delta)
+        sys.stdout.flush()
+    <span class="c-fn">print</span>(<span class="c-str">"\n"</span>)
+
+<span class="c-kw">if</span> __name__ == <span class="c-str">"__main__"</span>:
+    user_query = sys.argv[1] <span class="c-kw">if</span> len(sys.argv) > 1 <span class="c-kw">else</span> <span class="c-str">"Why is GrokBot unique from first principles?"</span>
+    ask_grok(user_query)
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-title">Step 5: Execute GrokBot</div>
+          <div class="code-box">
+            <div class="code-header">
+              <span>Bash — Run Command</span>
+              <button class="copy-btn" onclick="copyCode('step5-code')">Copy</button>
+            </div>
+            <div class="code-body" id="step5-code">
+python3 grok_bot.py "Explain quantum computing using first principles"
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Interactive GrokBot Simulator -->
+      <div class="terminal-window">
+        <div class="terminal-topbar">
+          <div class="terminal-dots">
+            <div class="dot dot-red"></div>
+            <div class="dot dot-yellow"></div>
+            <div class="dot dot-green"></div>
+          </div>
+          <div class="terminal-title">⚡ GrokBot First-Principles Simulator (v2.4)</div>
+          <div style="font-size: 0.7rem; color: var(--primary); font-family: var(--font-mono);">xAI Engine: ONLINE</div>
+        </div>
+
+        <div class="terminal-screen" id="term-screen">
+          <div style="color: #6b7280; margin-bottom: 1rem;">
+            [SYSTEM] xAI Grok-2 neural engine connected.<br>
+            [STATUS] Ready to deconstruct problems into first principles.<br>
+            [TIP] Click a preset prompt below or type your custom prompt:
+          </div>
+
+          <div class="prompt-presets">
+            <button class="preset-btn" onclick="setSimPrompt('Why is Grok unique compared to standard corporate LLMs?')">⚡ Why Grok is unique?</button>
+            <button class="preset-btn" onclick="setSimPrompt('Explain the physics of rocket propulsion from first principles.')">🚀 Rocket physics first principles</button>
+            <button class="preset-btn" onclick="setSimPrompt('Why do traditional bots censor harmless technical prompts?')">🛡️ Alignment tax & censorship</button>
+            <button class="preset-btn" onclick="setSimPrompt('How do I install grokbot in under 60 seconds?')">⏱️ 60-second install guide</button>
+          </div>
+
+          <div id="sim-output" style="margin-bottom: 1.5rem; white-space: pre-wrap; min-height: 80px; color: #a5f3fc; border-left: 2px solid var(--primary); padding-left: 1rem;">Click a preset or enter a query below to see Grok's first-principles response...</div>
+
+          <div class="terminal-input-group">
+            <span style="color: var(--primary); font-weight: bold;">&gt;</span>
+            <input type="text" id="sim-input" placeholder="Type a prompt to test GrokBot..." onkeydown="if(event.key==='Enter') runSim()" />
+            <button onclick="runSim()">Ask Grok</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer>
+    <p>⚡ <strong>GrokBot First Principles Project</strong> &bull; Inspired by xAI & Hitchhiker's Guide to the Galaxy</p>
+    <p style="margin-top: 0.5rem;">
+      Bloom's Cognitive Navigation: 
+      <a href="#remember">Remember</a> &bull; 
+      <a href="#understand">Understand</a> &bull; 
+      <a href="#analyse">Analyse</a> &bull; 
+      <a href="#evaluate">Evaluate</a> &bull; 
+      <a href="#create">Create</a>
+    </p>
+    <p style="margin-top: 0.5rem; color: #4b5563;">Built for high performance with zero external bloat.</p>
+  </footer>
+
+  <script>
+    // Copy Code Helper
+    function copyCode(id) {
+      const el = document.getElementById(id);
+      const text = el.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = el.previousElementSibling ? el.previousElementSibling.querySelector('.copy-btn') : null;
+        if (btn) {
+          const original = btn.innerText;
+          btn.innerText = "Copied!";
+          btn.style.background = "#10b981";
+          btn.style.color = "#000";
+          setTimeout(() => {
+            btn.innerText = original;
+            btn.style.background = "";
+            btn.style.color = "";
+          }, 1500);
+        }
+      });
+    }
+
+    // Interactive Evaluator Logic
+    const evalAnswers = { q1: null, q2: null, q3: null };
+    function selectEval(btn, qKey, val) {
+      evalAnswers[qKey] = val;
+      const parent = document.getElementById(qKey);
+      parent.querySelectorAll('.eval-opt').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    }
+
+    function calculateEval() {
+      const res = document.getElementById('eval-result');
+      res.style.display = 'block';
+
+      let score = 0;
+      if (evalAnswers.q1 === true) score += 40;
+      if (evalAnswers.q2 === true) score += 35;
+      if (evalAnswers.q3 === true) score += 25;
+
+      let verdict = "";
+      let color = "var(--primary)";
+
+      if (score >= 75) {
+        verdict = `<strong>Score: ${score}% — Definitive Match for GrokBot! 🚀</strong><br>
+        Your application demands real-time data freshness, uninhibited reasoning, and standard OpenAI protocol reusability. Deploying GrokBot will unlock maximal alpha and bypass conventional LLM safety choke points.`;
+      } else if (score >= 40) {
+        verdict = `<strong>Score: ${score}% — High Utility Hybrid 💡</strong><br>
+        You will benefit significantly from GrokBot for breaking data verification or unhedged reasoning, while standard models can serve for static archiving.`;
+      } else {
+        verdict = `<strong>Score: ${score}% — Moderate Match ⚖️</strong><br>
+        If your project only deals with historical textbooks and requires sanitized corporate neutrality, a standard legacy LLM may suffice, but GrokBot remains available when real-time pulse is required.`;
+      }
+
+      res.innerHTML = verdict;
+      res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Live Simulator Logic
+    const simResponses = {
+      "Why is Grok unique compared to standard corporate LLMs?": 
+`⚡ Grok First-Principles Analysis:
+1. Sensory Bandwidth: Standard LLMs are locked in an epistemic isolation tank—they only know what happened up to their training cutoff. Grok has direct synaptic connection to X's live global firehose.
+2. The Alignment Tax: Traditional corporate LLMs penalize candor in favor of PR safety guidelines. Grok is optimized for empirical truth: 2+2=4, even if an algorithm is offended.
+3. Supercomputing Substrate: Trained on Memphis Colossus (100k+ liquid-cooled GPUs), Grok achieves reasoning density with minimal synthetic hallucination.`,
+
+      "Explain the physics of rocket propulsion from first principles.": 
+`🚀 Rocket Physics (Tsiolkovsky First Principles):
+1. Axiom: Momentum is conserved in a closed system: dP/dt = 0.
+2. Mechanism: By burning propellant at high pressure and ejecting mass out the nozzle at exhaust velocity v_e, the rocket experiences an equal and opposite force.
+3. The Rocket Equation: Δv = v_e * ln(m_0 / m_f).
+4. Irreducible Bottleneck: The exponential penalty of propellant mass. To increase velocity linearly, your fuel mass must grow exponentially. This is why multi-stage reusable rockets (Starship) are mathematically required.`,
+
+      "Why do traditional bots censor harmless technical prompts?": 
+`🛡️ The Economics of Corporate Risk Avoidance:
+1. First Principle: Corporate LLM training applies Reinforcement Learning from Human Feedback (RLHF) optimized to minimize legal/PR blowback rather than maximize information density.
+2. The False Positive Dilemma: A safety classifier that errs on the side of refusing 10,000 legitimate cybersecurity or chemistry queries costs the corporation $0 in lawsuits. A single output generating negative press costs millions.
+3. Grok's Stance: Treat users as rational agents capable of processing unfiltered technical reality.`,
+
+      "How do I install grokbot in under 60 seconds?": 
+`⏱️ Rapid 60-Second Install:
+1. $ python3 -m venv venv && source venv/bin/activate
+2. $ pip install openai python-dotenv
+3. $ echo 'XAI_API_KEY="your_key"' > .env
+4. $ python3 grok_bot.py "Hello Grok!"
+Ready to query the cosmos.`
+    };
+
+    function setSimPrompt(text) {
+      document.getElementById('sim-input').value = text;
+      runSim();
+    }
+
+    function runSim() {
+      const input = document.getElementById('sim-input').value.trim();
+      if (!input) return;
+
+      const out = document.getElementById('sim-output');
+      out.innerHTML = `<span style="color: var(--warning);">⚡ Ingesting query into Grok-2 neural net...</span>`;
+
+      setTimeout(() => {
+        let answer = simResponses[input];
+        if (!answer) {
+          answer = `⚡ Grok-2 First-Principles Reasoning on "${input}":\n\n` +
+            `1. Fundamental Deconstruction: Stripping away convention, the core variables of this problem are information latency, physical constraints, and empirical truth.\n` +
+            `2. Causal Dynamics: Most systems fail because they optimize for comfort or analogical tradition rather than raw physics.\n` +
+            `3. Empirical Verdict: By applying direct observation via the live firehose and rigorous compute, GrokBot resolves this without corporate disclaimers.`;
+        }
+        
+        // Typing simulation
+        out.innerHTML = "";
+        let i = 0;
+        const timer = setInterval(() => {
+          out.innerHTML += answer.charAt(i);
+          i++;
+          if (i >= answer.length) {
+            clearInterval(timer);
+          }
+        }, 12);
+      }, 400);
+    }
+
+    // Active Navigation Highlighting on Scroll
+    const sections = document.querySelectorAll('section.section-block');
+    const navItems = document.querySelectorAll('.nav-item');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 120;
+        if (window.pageYOffset >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('href') === `#${current}`) {
+          item.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
