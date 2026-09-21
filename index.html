@@ -1627,12 +1627,40 @@ python3 src/grok_bot.py "Why is GrokBot unique?"
               <button class="copy-btn" onclick="copyCode('install-b-code')">Copy</button>
             </div>
             <div class="code-body" id="install-b-code">
-1. Install "Grok Bot" desktop app  →  https://x.ai
+1. Install "Grok Bot" desktop app  →  https://x.ai/bot
 2. Sign in  →  avatar menu: Rifat Erdem Sahin
 3. Plugins  →  Add: Gmail, Google Calendar, Google Drive
 4. 1Password →  Connect (credential vault)
 5. New Bot →  "LinkedIn Contractor Responses"
 6. Grant computer + browser control when prompted
+            </div>
+          </div>
+        </div>
+
+        <div class="install-card">
+          <div class="badge-row">
+            <span class="mini-badge ok">✓ Installed &amp; verified on this device</span>
+            <span class="mini-badge">v1.0.40 · macos-aarch64</span>
+          </div>
+          <h3>⌨️ Track C — Grok CLI (`grok` / `agent`)</h3>
+          <div class="tagline">x.ai/cli/install.sh · ~/.grok/bin</div>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">The official terminal coding agent. Two entrypoints into one native arm64 binary: <code>grok</code> for the interactive TUI and <code>agent</code> for headless runs. <code>grok doctor</code> reports 0 issues.</p>
+          <ul>
+            <li>OAuth login reused automatically from <code>~/.grok/auth.json</code></li>
+            <li>Adds <code>~/.grok/bin</code> to PATH and installs shell completions</li>
+            <li>No <code>sudo</code>; writes only inside <code>$HOME</code></li>
+          </ul>
+          <div class="code-box">
+            <div class="code-header">
+              <span>Verified install</span>
+              <button class="copy-btn" onclick="copyCode('install-c-code')">Copy</button>
+            </div>
+            <div class="code-body" id="install-c-code">
+curl -fsSL https://x.ai/cli/install.sh | bash
+grok --version          <span class="c-comm"># grok 1.0.40 (alpha)</span>
+grok doctor             <span class="c-comm"># 0 issues, 0 recommendations</span>
+grok "explain this repo"
+grok -p "summarise README.md"   <span class="c-comm"># one-shot, no TUI</span>
             </div>
           </div>
         </div>
@@ -2042,17 +2070,20 @@ Are you available for a call this week to discuss the role?
 
       <div class="report-banner">
         <div>
-          <h3 style="margin-bottom: 0.4rem;">📄 Full written report</h3>
-          <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 620px;">A Markdown report covering the device install, package versions, the file scan and rename map, the new directory grouping, and the real-time LinkedIn rationale for UK IT contractors.</p>
+          <h3 style="margin-bottom: 0.4rem;">📄 Full written reports</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 620px;"><strong>REPORT.md</strong> — device install, package versions, file scan and rename map, directory grouping, and the real-time LinkedIn rationale. <strong>GROK-CLI-REPORT.md</strong> — the `grok` CLI install, health check, auth status and usage.</p>
         </div>
-        <a href="docs/REPORT.md" class="btn-install" style="font-size: 0.95rem; padding: 0.7rem 1.4rem;">Open the report →</a>
+        <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
+          <a href="docs/REPORT.md" class="btn-install" style="font-size: 0.95rem; padding: 0.7rem 1.4rem;">Main report →</a>
+          <a href="docs/GROK-CLI-REPORT.md" class="btn-secondary" style="font-size: 0.95rem; padding: 0.7rem 1.4rem;">Grok CLI report →</a>
+        </div>
       </div>
 
       <div class="grid-3" style="margin-top: 1.25rem;">
         <div class="card">
           <div class="card-icon">📦</div>
           <h3>Installed</h3>
-          <p>Local <code>venv</code> with openai 3.16.2, python-dotenv 1.2.3, requests 2.34.2. Entrypoint verified at <code>src/grok_bot.py</code>.</p>
+          <p>Local <code>venv</code> (openai 3.16.2, python-dotenv 1.2.3, requests 2.34.2) and the <strong>Grok CLI 1.0.40</strong> at <code>~/.grok/bin</code>.</p>
         </div>
         <div class="card">
           <div class="card-icon">🗂️</div>
@@ -2094,7 +2125,8 @@ Are you available for a call this week to discuss the role?
       <strong>Evidence:</strong>
       <a href="#gallery">Screenshots</a> &bull;
       <a href="#report">Report</a> &bull;
-      <a href="docs/REPORT.md">docs/REPORT.md</a>
+      <a href="docs/REPORT.md">docs/REPORT.md</a> &bull;
+      <a href="docs/GROK-CLI-REPORT.md">Grok CLI report</a>
     </p>
     <p style="margin-top: 1rem; color: #4b5563;">Inspired by xAI &amp; Hitchhiker's Guide to the Galaxy. Built for high performance with zero external bloat.</p>
   </footer>
