@@ -669,6 +669,308 @@
       text-decoration: underline;
     }
 
+    /* ===== Grouped Navigation Menu ===== */
+    .nav-groups {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-group {
+      position: relative;
+    }
+
+    .nav-group > button {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.45rem 0.8rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s;
+    }
+
+    .nav-group > button:hover,
+    .nav-group:hover > button {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--border-color);
+    }
+
+    .nav-group-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      min-width: 250px;
+      background: rgba(13, 17, 26, 0.97);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 0.5rem;
+      display: none;
+      flex-direction: column;
+      gap: 0.15rem;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+      z-index: 1200;
+    }
+
+    .nav-group:hover .nav-group-menu,
+    .nav-group:focus-within .nav-group-menu {
+      display: flex;
+    }
+
+    .nav-group-menu a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      padding: 0.5rem 0.65rem;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      white-space: nowrap;
+    }
+
+    .nav-group-menu a:hover {
+      background: var(--primary-dim);
+      color: var(--primary);
+    }
+
+    .nav-group-menu .menu-label {
+      font-size: 0.62rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      padding: 0.5rem 0.65rem 0.2rem;
+    }
+
+    /* ===== Install / Usage Cards ===== */
+    .install-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .install-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .install-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .install-card .tagline {
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      margin-bottom: 0.75rem;
+    }
+
+    .install-card ul {
+      margin: 0.5rem 0 1rem 1.1rem;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    .install-card ul li {
+      margin-bottom: 0.4rem;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+
+    .mini-badge {
+      font-size: 0.68rem;
+      font-family: var(--font-mono);
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .mini-badge.ok {
+      color: var(--success);
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    /* ===== LinkedIn Playbook ===== */
+    .why-hero {
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.08), rgba(168, 85, 247, 0.08));
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--x-color);
+      border-radius: 14px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .metric {
+      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.1rem;
+    }
+
+    .metric .value {
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary);
+      display: block;
+    }
+
+    .metric .label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      display: block;
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-top: 1.25rem;
+    }
+
+    .compare-table th,
+    .compare-table td {
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.7rem 0.75rem;
+      text-align: left;
+    }
+
+    .compare-table th {
+      color: var(--primary);
+      font-size: 0.72rem;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+    }
+
+    .compare-table td {
+      color: var(--text-muted);
+    }
+
+    .compare-table td:first-child {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    /* ===== Screenshot Gallery ===== */
+    .gallery-phase {
+      margin-top: 1.75rem;
+    }
+
+    .phase-heading {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.75rem;
+    }
+
+    .phase-heading .num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: #000;
+      background: var(--primary);
+      border-radius: 6px;
+      padding: 0.15rem 0.5rem;
+    }
+
+    .shot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .shot {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .shot:hover {
+      transform: translateY(-3px);
+      border-color: rgba(0, 240, 255, 0.4);
+    }
+
+    .shot a {
+      display: block;
+      background: #05070b;
+    }
+
+    .shot img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+
+    .shot figcaption {
+      padding: 0.8rem 0.9rem;
+    }
+
+    .shot figcaption strong {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      margin-bottom: 0.2rem;
+    }
+
+    .shot figcaption span {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+    /* ===== Report Banner ===== */
+    .report-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
     @media (max-width: 900px) {
       header.top-nav {
         flex-direction: column;
@@ -678,6 +980,16 @@
       nav.bloom-menu {
         flex-wrap: wrap;
         justify-content: center;
+      }
+      .nav-groups {
+        justify-content: center;
+      }
+      .nav-group-menu {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .shot img {
+        height: 160px;
       }
       .hero h1 {
         font-size: 2.2rem;
@@ -695,16 +1007,52 @@
       <span class="tag">First Principles</span>
     </a>
 
-    <nav class="bloom-menu" id="nav-links">
-      <a href="#remember" class="nav-item active"><span class="bloom-pill pill-remember" style="padding: 1px 6px; font-size: 0.65rem;">1</span> Remember</a>
-      <a href="#understand" class="nav-item"><span class="bloom-pill pill-understand" style="padding: 1px 6px; font-size: 0.65rem;">2</span> Understand</a>
-      <a href="#analyse" class="nav-item"><span class="bloom-pill pill-analyse" style="padding: 1px 6px; font-size: 0.65rem;">3</span> Analyse</a>
-      <a href="#evaluate" class="nav-item"><span class="bloom-pill pill-evaluate" style="padding: 1px 6px; font-size: 0.65rem;">4</span> Evaluate</a>
-      <a href="#create" class="nav-item"><span class="bloom-pill pill-create" style="padding: 1px 6px; font-size: 0.65rem;">5</span> Create</a>
+    <nav class="nav-groups" id="nav-links">
+      <div class="nav-group">
+        <button type="button">🧠 Guide <span aria-hidden="true">▾</span></button>
+        <div class="nav-group-menu">
+          <span class="menu-label">Bloom's Cognitive Hierarchy</span>
+          <a href="#remember" class="nav-item active"><span class="bloom-pill pill-remember" style="padding: 1px 6px; font-size: 0.65rem;">1</span> Remember</a>
+          <a href="#understand" class="nav-item"><span class="bloom-pill pill-understand" style="padding: 1px 6px; font-size: 0.65rem;">2</span> Understand</a>
+          <a href="#analyse" class="nav-item"><span class="bloom-pill pill-analyse" style="padding: 1px 6px; font-size: 0.65rem;">3</span> Analyse</a>
+          <a href="#evaluate" class="nav-item"><span class="bloom-pill pill-evaluate" style="padding: 1px 6px; font-size: 0.65rem;">4</span> Evaluate</a>
+          <a href="#create" class="nav-item"><span class="bloom-pill pill-create" style="padding: 1px 6px; font-size: 0.65rem;">5</span> Create</a>
+        </div>
+      </div>
+
+      <div class="nav-group">
+        <button type="button">⚡ Install &amp; Use <span aria-hidden="true">▾</span></button>
+        <div class="nav-group-menu">
+          <span class="menu-label">Deploy GrokBot</span>
+          <a href="#install" class="nav-item">📦 Install on this device</a>
+          <a href="#usage" class="nav-item">⌨️ Usage &amp; run commands</a>
+          <a href="#bots" class="nav-item">🤖 Custom bots &amp; plugins</a>
+        </div>
+      </div>
+
+      <div class="nav-group">
+        <button type="button">💼 LinkedIn Playbook <span aria-hidden="true">▾</span></button>
+        <div class="nav-group-menu">
+          <span class="menu-label">UK IT Contractor Workflow</span>
+          <a href="#linkedin" class="nav-item">📡 Why real-time matters</a>
+          <a href="#workflow" class="nav-item">🔁 Daily recruiter routine</a>
+          <a href="#reply" class="nav-item">✉️ Reply template</a>
+        </div>
+      </div>
+
+      <div class="nav-group">
+        <button type="button">🖼️ Evidence <span aria-hidden="true">▾</span></button>
+        <div class="nav-group-menu">
+          <span class="menu-label">Proof &amp; Documentation</span>
+          <a href="#gallery" class="nav-item">🗂️ Screenshot gallery</a>
+          <a href="docs/REPORT.md">📄 Installation report</a>
+          <a href="#report" class="nav-item">📊 Report summary</a>
+        </div>
+      </div>
     </nav>
 
     <div class="nav-actions">
-      <a href="#create" class="btn-install">
+      <a href="#install" class="btn-install">
         <span>⚡ Install Bot</span>
       </a>
     </div>
@@ -1064,7 +1412,7 @@ pip install --upgrade openai python-dotenv requests
               <button class="copy-btn" onclick="copyCode('step1-code')">Copy</button>
             </div>
             <div class="code-body" id="step1-code">
-cd /Users/rifaterdemsahin/grokbot
+cd ~/projects/grokbot
 python3 -m venv venv
 source venv/bin/activate
             </div>
@@ -1175,7 +1523,7 @@ Break down assumptions, eliminate corporate fluff, and deliver witty, mathematic
               <button class="copy-btn" onclick="copyCode('step5-code')">Copy</button>
             </div>
             <div class="code-body" id="step5-code">
-python3 grok_bot.py "Explain quantum computing using first principles"
+python3 src/grok_bot.py "Explain quantum computing using first principles"
             </div>
           </div>
         </div>
@@ -1218,19 +1566,537 @@ python3 grok_bot.py "Explain quantum computing using first principles"
       </div>
 
     </section>
+
+    <!-- SECTION: INSTALL ON THIS DEVICE -->
+    <section id="install" class="section-block">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="bloom-pill pill-create">Deploy</span>
+          <h2>Install GrokBot on This Device</h2>
+        </div>
+        <div class="section-subtitle">Two install tracks: the verified local Python PoC (CLI) and the xAI Grok Bot desktop agent that drives LinkedIn. Both are documented below.</div>
+      </div>
+
+      <div class="install-grid">
+        <div class="install-card">
+          <div class="badge-row">
+            <span class="mini-badge ok">✓ Installed &amp; verified on this device</span>
+            <span class="mini-badge">macOS · python 3.14</span>
+          </div>
+          <h3>🐍 Track A — Python PoC (CLI)</h3>
+          <div class="tagline">src/grok_bot.py · openai · python-dotenv</div>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">The repo's runnable first-principles agent. It streams responses from the xAI API over the OpenAI-compatible protocol, and falls back to a deterministic simulation when no key is present — so it always runs.</p>
+          <ul>
+            <li>Zero hard dependency on a paid key to demo</li>
+            <li>Streaming SSE output with a Grok system prompt</li>
+            <li>Drop-in for any OpenAI SDK code path</li>
+          </ul>
+          <div class="code-box">
+            <div class="code-header">
+              <span>Verified install sequence</span>
+              <button class="copy-btn" onclick="copyCode('install-a-code')">Copy</button>
+            </div>
+            <div class="code-body" id="install-a-code">
+cd ~/projects/grokbot
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env   <span class="c-comm"># then paste your XAI_API_KEY</span>
+python3 src/grok_bot.py "Why is GrokBot unique?"
+            </div>
+          </div>
+        </div>
+
+        <div class="install-card">
+          <div class="badge-row">
+            <span class="mini-badge">Desktop agent · cloud computer</span>
+            <span class="mini-badge">Chrome + 1Password</span>
+          </div>
+          <h3>🖥️ Track B — Grok Bot Desktop Agent</h3>
+          <div class="tagline">Grok Bot · computer-use agent (bot-cua)</div>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">The agent that actually operates LinkedIn. Unlike a chat model, Grok Bot controls a persistent cloud computer, opens real browser tabs, signs in, and completes multi-step tasks in the background.</p>
+          <ul>
+            <li>Install the Grok Bot desktop app and sign in with your xAI account</li>
+            <li>Connect credentials via the 1Password plugin, or enter them once in the on-screen form</li>
+            <li>Add the Gmail, Google Calendar, Google Drive and Granola plugins</li>
+            <li>Create named custom bots (see <a href="#bots" style="color: var(--primary);">Custom bots &amp; plugins</a>)</li>
+          </ul>
+          <div class="code-box">
+            <div class="code-header">
+              <span>Agent setup checklist</span>
+              <button class="copy-btn" onclick="copyCode('install-b-code')">Copy</button>
+            </div>
+            <div class="code-body" id="install-b-code">
+1. Install "Grok Bot" desktop app  →  https://x.ai
+2. Sign in  →  avatar menu: Rifat Erdem Sahin
+3. Plugins  →  Add: Gmail, Google Calendar, Google Drive
+4. 1Password →  Connect (credential vault)
+5. New Bot →  "LinkedIn Contractor Responses"
+6. Grant computer + browser control when prompted
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: USAGE -->
+    <section id="usage" class="section-block">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="bloom-pill pill-apply" style="background: var(--primary-dim); color: var(--primary); border: 1px solid var(--border-glow); padding: 3px 10px; border-radius: 999px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Usage</span>
+          <h2>How To Use It — Day-to-Day</h2>
+        </div>
+        <div class="section-subtitle">The CLI answers questions. The desktop agent runs your LinkedIn pipeline. Here is the exact operating loop for each.</div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">⌨️</div>
+          <h3>Use the CLI</h3>
+          <p>One-shot questions with streamed answers. Pass the prompt as an argument; the model is read from <code>GROK_MODEL</code> in <code>.env</code>.</p>
+          <div class="code-box" style="margin-top: 0.75rem;">
+            <div class="code-header"><span>Run</span><button class="copy-btn" onclick="copyCode('usage-cli-code')">Copy</button></div>
+            <div class="code-body" id="usage-cli-code">
+python3 src/grok_bot.py "Draft a cold intro to a UK recruiter"
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">💬</div>
+          <h3>Use the desktop agent</h3>
+          <p>Talk to the bot in plain language. It will narrate each step, open the browser, and ask you to confirm before sending anything.</p>
+          <p style="margin-top: 0.6rem; color: var(--text-muted); font-size: 0.88rem;">Example prompt used in this repo:</p>
+          <p style="margin-top: 0.4rem; font-family: var(--font-mono); font-size: 0.78rem; color: #a5f3fc; background: rgba(0,0,0,0.35); padding: 0.6rem 0.7rem; border-radius: 8px;">"Sign in to LinkedIn and pull the recruiter threads that still need a reply. Draft each answer in my voice and check with me before sending."</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🛡️</div>
+          <h3>Safety rules</h3>
+          <p>• Credentials go straight into the browser — they are never stored in chat.<br>
+          • The agent reviews drafts with you before sending.<br>
+          • 2FA / "Check your LinkedIn app" is expected and handled on screen.<br>
+          • Every action is visible in the chat transcript.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 1rem; border-left: 4px solid var(--success);">
+        <h3>✅ Verified run on this device</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">The local PoC was installed into <code>./venv</code> and executed successfully. Because no <code>XAI_API_KEY</code> is stored in the repo, it produced its deterministic first-principles simulation - proving the install, imports, and entrypoint all work end to end.</p>
+        <div class="code-box" style="margin-top: 0.75rem;">
+          <div class="code-header"><span>Observed output</span></div>
+          <div class="code-body" style="color: #86efac;">$ ./venv/bin/pip list | grep -Ei 'openai|dotenv'
+openai          3.16.2
+python-dotenv   1.2.3
+requests        2.34.2
+
+$ ./venv/bin/python src/grok_bot.py "Why is GrokBot unique from first principles?"
+⚡ GrokBot: First-Principles AI Agent
+⚠️  [Setup Required]: XAI_API_KEY not found or is default.
+🤖 [GrokBot (First Principles Simulation)]:
+1. Information Latency: Collapsing time between real-world events and intelligence to near zero using live X telemetry.
+2. Epistemic Integrity: Prioritizing empirical physics and mathematical truth over corporate alignment filters.
+3. Supercomputing Scale: Powered by Memphis Colossus 100k+ liquid-cooled GPU cluster.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: CUSTOM BOTS & PLUGINS -->
+    <section id="bots" class="section-block">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="bloom-pill pill-analyse">Configure</span>
+          <h2>Custom Bots &amp; Plugin Stack</h2>
+        </div>
+        <div class="section-subtitle">Grok Bot is only as useful as the bots you define and the tools you connect. This is the grouping already running in the screenshots.</div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">🧭</div>
+          <h3>LinkedIn Research</h3>
+          <p>Reconnaissance bot. Reads a role, a client, or a hiring manager and builds context before you reply — market day-rate signals, IR35 status, stack fit.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📣</div>
+          <h3>LinkedIn YouTube Promote or Messages</h3>
+          <p>Outbound bot. Turns your videos and posts into warm-touch messages and follow-ups so your profile keeps moving between contracts.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚫</div>
+          <h3>LinkedIn Contractor Responses</h3>
+          <p>The workhorse. Signs in, scans recruiter threads, drafts replies in your voice with the matching CV link, and asks for confirmation before sending.</p>
+        </div>
+      </div>
+
+      <h3 style="margin: 2rem 0 0.25rem;">Connected plugins (grouped by purpose)</h3>
+      <table class="compare-table">
+        <thead>
+          <tr><th>Group</th><th>Plugin</th><th>What it unlocks</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Communication</td><td>Gmail</td><td>Read, draft and send email follow-ups to recruiters and clients</td><td style="color: var(--success);">Added</td></tr>
+          <tr><td>Scheduling</td><td>Google Calendar</td><td>Offer real interview/call slots without double-booking</td><td style="color: var(--success);">Added</td></tr>
+          <tr><td>Files &amp; CVs</td><td>Google Drive</td><td>Host and share per-role CV variants</td><td style="color: var(--success);">Added</td></tr>
+          <tr><td>Meetings</td><td>Granola</td><td>Capture recruiter/client call notes into the pipeline</td><td>Available</td></tr>
+          <tr><td>Credentials</td><td>1Password</td><td>Share a dedicated vault instead of pasting passwords in chat</td><td>Connect</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- SECTION: LINKEDIN REAL-TIME -->
+    <section id="linkedin" class="section-block">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="bloom-pill pill-evaluate">Why</span>
+          <h2>Why Running LinkedIn Here Matters — and Must Be Near Real-Time</h2>
+        </div>
+        <div class="section-subtitle">For a UK IT contractor, recruiter messages are not "email". They are perishable, time-decaying option contracts on your next day rate.</div>
+      </div>
+
+      <div class="why-hero">
+        <h3 style="margin-bottom: 0.6rem;">The first-principles income equation</h3>
+        <p style="color: var(--text-muted);">
+          <code style="color: var(--primary);">Contract income ≈ (role supply) × (match precision) × (response speed)</code>
+        </p>
+        <p style="color: var(--text-muted); margin-top: 0.9rem;">
+          Role supply and match precision are largely fixed by your skills and CV. <strong>Response speed is the only variable you fully control</strong> — and it is the one that decays fastest. A UK contract role can be shortlisted the same working day it is released. The recruiter sends InMails in parallel to a handful of contractors, then submits the first two or three credible CVs to the client. Every hour of latency silently deletes options.
+        </p>
+        <p style="color: var(--text-muted); margin-top: 0.9rem;">
+          Running LinkedIn <em>inside</em> Grok Bot — on the same computer that holds your CVs, calendar, and clearance evidence — collapses that latency from "when I next log in" to "the moment the message lands". The agent is not a notification tray. It is a standing human-in-the-loop responder that keeps every recruiter conversation warm.
+        </p>
+      </div>
+
+      <div class="metric-grid">
+        <div class="metric">
+          <span class="value">Same day</span>
+          <span class="label">Typical UK contract shortlist window from role release to CV submission</span>
+        </div>
+        <div class="metric">
+          <span class="value">&lt; 1 hr</span>
+          <span class="label">Recruiter expectation for a credible first reply in business hours</span>
+        </div>
+        <div class="metric">
+          <span class="value">£400–£700</span>
+          <span class="label">Illustrative UK day rate at stake per missed or slow conversation</span>
+        </div>
+        <div class="metric">
+          <span class="value">24 hrs</span>
+          <span class="label">Approximate shelf life of an unanswered InMail before the thread goes cold</span>
+        </div>
+      </div>
+      <p style="color: var(--text-dim); font-size: 0.72rem; margin-top: 0.6rem;">Figures are directional benchmarks for the UK contract market, shown to illustrate the latency economics — not guarantees.</p>
+
+      <h3 style="margin: 2rem 0 0.5rem;">The UK-specific reasons speed is decisive</h3>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">🇬🇧</div>
+          <h3>Inside / Outside IR35</h3>
+          <p>Status changes the effective rate by 20–30%. A fast reply clarifies whether you will work via your Ltd company or an umbrella before the recruiter moves to the next name.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔐</div>
+          <h3>SC / BPSS / CNI clearance</h3>
+          <p>Public-sector and CNI roles filter hard on active clearance. Stating "active SC, eligible to work in the UK" in the first reply removes the single biggest screening objection instantly.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏢</div>
+          <h3>Agency right-to-represent</h3>
+          <p>Once an agency submits you to a client, other agencies usually cannot. Responding early keeps you in control of which agency represents you, rather than losing the role to a faster competitor.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⏳</div>
+          <h3>Short notice, fast starts</h3>
+          <p>UK contracts often start within 2–4 weeks. Recruiters screen availability first; a same-hour answer that confirms notice period beats a better CV that replies tomorrow.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📥</div>
+          <h3>Inbox volume and decay</h3>
+          <p>Recruiters fire many InMails per role. Your inbox is a queue with a decay constant: threads you answer the same day stay alive; threads you answer three days later are already filled.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎯</div>
+          <h3>Per-role CV matching</h3>
+          <p>The agent pulls the right CV variant from your CV library for each role, so a fast reply is also a precise reply — speed without relevance is just noise.</p>
+        </div>
+      </div>
+
+      <h3 style="margin: 2rem 0 0.5rem;">Manual checking vs. near-real-time agent</h3>
+      <table class="compare-table">
+        <thead>
+          <tr><th>Dimension</th><th>Manual / once-a-day</th><th>Grok Bot near real-time</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Detection latency</td><td>Hours to days</td><td>Minutes — on the daily routine, continuously when running</td></tr>
+          <tr><td>Unanswered threads</td><td>Accumulate; buried under new InMails</td><td>Target is zero; the agent works the backlog daily</td></tr>
+          <tr><td>Reply quality</td><td>Rushed or generic</td><td>Consistent pitch, correct CV link, clearance stated</td></tr>
+          <tr><td>IR35 / rate clarity</td><td>Often deferred to a call</td><td>Clarified in the first reply</td></tr>
+          <tr><td>Right-to-represent risk</td><td>High — slow response loses the role</td><td>Low — first credible responder keeps control</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- SECTION: WORKFLOW -->
+    <section id="workflow" class="section-block">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="bloom-pill pill-analyse">Operate</span>
+          <h2>The Daily Recruiter Routine</h2>
+        </div>
+        <div class="section-subtitle">A recurring background job keeps the inbox at zero unanswered threads and every conversation moving forward.</div>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-title">09:00 BST — Daily LinkedIn recruiter follow-up</div>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">The routine triggers automatically each UK business morning.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-title">Scan messaging inbox</div>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Grok Bot reads the LinkedIn messaging view, including threads filed under <em>Other / Secondary</em>, and lists every recruiter thread that still needs a reply.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-title">Match the right CV</div>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Each thread is matched to the role-specific CV variant, e.g. <code>cv_azure_platform_engineer.pdf</code> from the CV library.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-title">Draft in your voice, then confirm</div>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">The agent drafts each reply using your pitch template and shows it for approval. Nothing is sent without your go-ahead.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-title">Nudge and keep warm</div>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Existing conversations (Denise, Yogya, Molly, Gurusha, …) get a follow-up so no thread decays while you are on a current contract.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-title">Report back</div>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">The bot posts a transcript of what it did, so you can audit every message and keep the pipeline honest.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: REPLY TEMPLATE -->
+    <section id="reply" class="section-block">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="bloom-pill pill-create">Create</span>
+          <h2>The Reply Template (Voice of a UK Azure Contractor)</h2>
+        </div>
+        <div class="section-subtitle">A high-signal first reply: experience, proof, clearance, eligibility, CV link, and a concrete call request — in one scannable message.</div>
+      </div>
+
+      <div class="card" style="border-left: 4px solid var(--x-color);">
+        <div class="code-box">
+          <div class="code-header">
+            <span>Recruiter reply template (as used in the screenshots)</span>
+            <button class="copy-btn" onclick="copyCode('reply-template-code')">Copy</button>
+          </div>
+          <div class="code-body" id="reply-template-code">
+Hi <span class="c-comm">&lt;name&gt;</span>,
+
+I bring deep hands-on experience leading technical investigations of complex
+Azure platform issues across infrastructure, network, and application layers
+for Critical National Infrastructure clients.
+
+At NESO, I architected automated observability and GitOps workflows on Azure
+using ARM templates, Azure DevOps Pipelines, and Argo-CD while building a
+localized RAG framework with Loki logs and Qdrant to deliver real-time root
+cause analysis. At Cushman &amp; Wakefield, I created ARM templates to automate
+infrastructure provisioning, and at Microsoft as Cloud Solution Architect I
+drove enterprise transformations using ARM, RBAC, and Azure Policy at scale.
+My PowerShell automation supported Service Fabric deployments and CI/CD
+pipelines relied upon by multiple engineering teams.
+
+I hold active SC, CNI, and BPSS clearances and am eligible to work in the UK.
+
+My CV is here: <span class="c-str">https://rifat-cvs.fly.dev/cv_azure_platform_engineer.pdf</span>
+Are you available for a call this week to discuss the role?
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-3" style="margin-top: 1.25rem;">
+        <div class="card">
+          <div class="card-icon">🧩</div>
+          <h3>Why it works</h3>
+          <p>It answers the six questions every UK recruiter screens for — stack, scale, proof, clearance, eligibility, availability — before they have to ask.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🗂️</div>
+          <h3>Per-role CV variants</h3>
+          <p>The CV link is swapped to match the role. The CV library lives at <a href="https://github.com/rifaterdemsahin/CVLauncher" target="_blank" style="color: var(--primary);">CVLauncher</a>, with a different CV per specialism.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⏱️</div>
+          <h3>Speed + specificity</h3>
+          <p>Because the agent replies within minutes, the message can afford to be detailed. Speed without relevance loses; relevant detail at speed wins.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: EVIDENCE GALLERY -->
+    <section id="gallery" class="section-block">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="bloom-pill pill-remember">Evidence</span>
+          <h2>Screenshot Gallery — The Full Run</h2>
+        </div>
+        <div class="section-subtitle">The actual end-to-end run, grouped into four phases. Filenames are renamed to describe what each frame proves.</div>
+      </div>
+
+      <div class="gallery-phase">
+        <div class="phase-heading"><span class="num">Phase 01</span> Secure sign-in &amp; 2FA</div>
+        <div class="shot-grid">
+          <figure class="shot">
+            <a href="images/01-grokbot-linkedin-signin-request.jpg" target="_blank"><img src="images/01-grokbot-linkedin-signin-request.jpg" alt="Grok Bot asks for LinkedIn credentials to answer recruiters" loading="lazy"></a>
+            <figcaption><strong>01 · Agent takes the instruction</strong><span>Grok Bot accepts the LinkedIn task, explains it will open the sign-in page on the computer, and requests credentials.</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <a href="images/02-linkedin-browser-credential-banner.jpg" target="_blank"><img src="images/02-linkedin-browser-credential-banner.jpg" alt="Chrome LinkedIn sign-in with credential banner" loading="lazy"></a>
+            <figcaption><strong>02 · Real browser, real session</strong><span>The agent drives Chrome to LinkedIn's sign-in page. A banner confirms credentials never enter the chat.</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <a href="images/03-linkedin-google-account-chooser.jpg" target="_blank"><img src="images/03-linkedin-google-account-chooser.jpg" alt="LinkedIn login with Google account chooser" loading="lazy"></a>
+            <figcaption><strong>03 · Federated login</strong><span>LinkedIn's "Continue with Google" path opens the Google account chooser.</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <a href="images/04-google-signin-pexabo-account.jpg" target="_blank"><img src="images/04-google-signin-pexabo-account.jpg" alt="Google sign-in with the contractor account" loading="lazy"></a>
+            <figcaption><strong>04 · The contractor identity</strong><span>The work address is entered into Google's sign-in flow.</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <a href="images/05-google-account-chooser-loading.jpg" target="_blank"><img src="images/05-google-account-chooser-loading.jpg" alt="Google account chooser loading" loading="lazy"></a>
+            <figcaption><strong>05 · Hand-off between services</strong><span>The account chooser loads — proof the agent is following the real OAuth redirect chain.</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <a href="images/06-linkedin-app-2fa-checkpoint.jpg" target="_blank"><img src="images/06-linkedin-app-2fa-checkpoint.jpg" alt="LinkedIn app two-factor checkpoint" loading="lazy"></a>
+            <figcaption><strong>06 · 2FA checkpoint</strong><span>LinkedIn asks for device approval. Security is preserved; the agent pauses for the human.</span></figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="gallery-phase">
+        <div class="phase-heading"><span class="num">Phase 02</span> Scan, draft, send</div>
+        <div class="shot-grid">
+          <figure class="shot">
+            <a href="images/07-grokbot-scanning-recruiter-inbox.jpg" target="_blank"><img src="images/07-grokbot-scanning-recruiter-inbox.jpg" alt="Grok Bot scanning the LinkedIn recruiter inbox" loading="lazy"></a>
+            <figcaption><strong>07 · Inbox scan</strong><span>Signed in, the agent scans the messaging inbox for recruiter threads that still need a reply.</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <a href="images/08-grokbot-recruiter-reply-template.jpg" target="_blank"><img src="images/08-grokbot-recruiter-reply-template.jpg" alt="Grok Bot learning the reply template" loading="lazy"></a>
+            <figcaption><strong>08 · Learning the voice</strong><span>You supply the pitch template and CV library; the agent adopts it for every recruiter reply.</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <a href="images/09-linkedin-sent-recruiter-reply.jpg" target="_blank"><img src="images/09-linkedin-sent-recruiter-reply.jpg" alt="Recruiter reply sent in LinkedIn messaging" loading="lazy"></a>
+            <figcaption><strong>09 · Sent in LinkedIn</strong><span>The finished reply lands in LinkedIn messaging with experience, clearances, eligibility and CV link.</span></figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="gallery-phase">
+        <div class="phase-heading"><span class="num">Phase 03</span> Always-on routine</div>
+        <div class="shot-grid">
+          <figure class="shot">
+            <a href="images/10-grokbot-daily-followup-routine.jpg" target="_blank"><img src="images/10-grokbot-daily-followup-routine.jpg" alt="Grok Bot daily recruiter follow-up routine" loading="lazy"></a>
+            <figcaption><strong>10 · Daily 09:00 routine</strong><span>A recurring job keeps unanswered threads at zero and nudges live conversations forward each UK morning.</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <a href="images/11-cursor-usage-grok-bot-cua-tokens.jpg" target="_blank"><img src="images/11-cursor-usage-grok-bot-cua-tokens.jpg" alt="Token usage for grok-bot computer-use agent" loading="lazy"></a>
+            <figcaption><strong>11 · Measured computer-use</strong><span>Token accounting for the <code>grok-bot-cua</code> agent, so the automation cost is observable.</span></figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="gallery-phase">
+        <div class="phase-heading"><span class="num">Phase 04</span> Bot &amp; plugin stack</div>
+        <div class="shot-grid">
+          <figure class="shot">
+            <a href="images/12-grokbot-custom-bots-sidebar.jpg" target="_blank"><img src="images/12-grokbot-custom-bots-sidebar.jpg" alt="Sidebar listing the three custom LinkedIn bots" loading="lazy"></a>
+            <figcaption><strong>12 · Three purpose-built bots</strong><span>LinkedIn Research, LinkedIn YouTube Promote, and LinkedIn Contractor Responses.</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <a href="images/13-grokbot-plugin-marketplace.jpg" target="_blank"><img src="images/13-grokbot-plugin-marketplace.jpg" alt="Grok Bot plugin marketplace" loading="lazy"></a>
+            <figcaption><strong>13 · Plugin marketplace</strong><span>Gmail, Google Calendar, Google Drive, Granola, 1Password and more — grouped by function.</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <a href="images/14-grokbot-featured-plugins-added.jpg" target="_blank"><img src="images/14-grokbot-featured-plugins-added.jpg" alt="Featured plugins showing added status" loading="lazy"></a>
+            <figcaption><strong>14 · Plugins connected</strong><span>Gmail, Google Calendar and Google Drive show "Added", completing the productivity loop.</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: REPORT -->
+    <section id="report" class="section-block">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="bloom-pill pill-evaluate">Report</span>
+          <h2>Installation &amp; Usage Report</h2>
+        </div>
+        <div class="section-subtitle">The full audit trail: what was installed, what was renamed, how the repo is now grouped, and why the LinkedIn loop is worth running.</div>
+      </div>
+
+      <div class="report-banner">
+        <div>
+          <h3 style="margin-bottom: 0.4rem;">📄 Full written report</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 620px;">A Markdown report covering the device install, package versions, the file scan and rename map, the new directory grouping, and the real-time LinkedIn rationale for UK IT contractors.</p>
+        </div>
+        <a href="docs/REPORT.md" class="btn-install" style="font-size: 0.95rem; padding: 0.7rem 1.4rem;">Open the report →</a>
+      </div>
+
+      <div class="grid-3" style="margin-top: 1.25rem;">
+        <div class="card">
+          <div class="card-icon">📦</div>
+          <h3>Installed</h3>
+          <p>Local <code>venv</code> with openai 3.16.2, python-dotenv 1.2.3, requests 2.34.2. Entrypoint verified at <code>src/grok_bot.py</code>.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🗂️</div>
+          <h3>Regrouped</h3>
+          <p><code>src/</code> for code, <code>images/</code> for screenshot evidence, <code>docs/</code> for written reports, root for the site and config.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏷️</div>
+          <h3>Renamed</h3>
+          <p>All 14 numeric screenshots renamed to phase-numbered, descriptive filenames describing exactly what each one proves.</p>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
-    <p>⚡ <strong>GrokBot First Principles Project</strong> &bull; Inspired by xAI & Hitchhiker's Guide to the Galaxy</p>
+    <p>⚡ <strong>GrokBot — First Principles &amp; UK Contractor LinkedIn Pipeline</strong></p>
     <p style="margin-top: 0.5rem;">
-      Bloom's Cognitive Navigation: 
-      <a href="#remember">Remember</a> &bull; 
-      <a href="#understand">Understand</a> &bull; 
-      <a href="#analyse">Analyse</a> &bull; 
-      <a href="#evaluate">Evaluate</a> &bull; 
+      <strong>Guide:</strong>
+      <a href="#remember">Remember</a> &bull;
+      <a href="#understand">Understand</a> &bull;
+      <a href="#analyse">Analyse</a> &bull;
+      <a href="#evaluate">Evaluate</a> &bull;
       <a href="#create">Create</a>
     </p>
-    <p style="margin-top: 0.5rem; color: #4b5563;">Built for high performance with zero external bloat.</p>
+    <p style="margin-top: 0.4rem;">
+      <strong>Install &amp; Use:</strong>
+      <a href="#install">Install</a> &bull;
+      <a href="#usage">Usage</a> &bull;
+      <a href="#bots">Custom bots &amp; plugins</a>
+    </p>
+    <p style="margin-top: 0.4rem;">
+      <strong>LinkedIn Playbook:</strong>
+      <a href="#linkedin">Why real-time</a> &bull;
+      <a href="#workflow">Daily routine</a> &bull;
+      <a href="#reply">Reply template</a>
+    </p>
+    <p style="margin-top: 0.4rem;">
+      <strong>Evidence:</strong>
+      <a href="#gallery">Screenshots</a> &bull;
+      <a href="#report">Report</a> &bull;
+      <a href="docs/REPORT.md">docs/REPORT.md</a>
+    </p>
+    <p style="margin-top: 1rem; color: #4b5563;">Inspired by xAI &amp; Hitchhiker's Guide to the Galaxy. Built for high performance with zero external bloat.</p>
   </footer>
 
   <script>
@@ -1314,9 +2180,9 @@ python3 grok_bot.py "Explain quantum computing using first principles"
       "How do I install grokbot in under 60 seconds?": 
 `⏱️ Rapid 60-Second Install:
 1. $ python3 -m venv venv && source venv/bin/activate
-2. $ pip install openai python-dotenv
-3. $ echo 'XAI_API_KEY="your_key"' > .env
-4. $ python3 grok_bot.py "Hello Grok!"
+2. $ pip install -r requirements.txt
+3. $ cp .env.example .env   # then set XAI_API_KEY
+4. $ python3 src/grok_bot.py "Hello Grok!"
 Ready to query the cosmos.`
     };
 

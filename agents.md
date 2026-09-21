@@ -12,7 +12,7 @@ All user-facing documentation, web interfaces, and educational tools must implem
 2. **Understand**: Deconstruct concepts through first principles (physics of information latency, epistemic truth vs alignment tax, supercomputing scale).
 3. **Analyse**: Examine architectural differentiation (live X firehose integration, zero preachiness, OpenAI drop-in compatibility, comparison matrix).
 4. **Evaluate**: Assess engineering trade-offs, ROI, suitability scoring, and decision boundaries.
-5. **Create**: Hands-on building, installation pipeline, runnable Python scripts ([`grok_bot.py`](./grok_bot.py)), and testing simulators.
+5. **Create**: Hands-on building, installation pipeline, runnable Python scripts ([`src/grok_bot.py`](./src/grok_bot.py)), and testing simulators.
 
 ### 2. Server Port Policy (30,000+ Mandate)
 - **Always** run local application and development preview servers on ports **over 30,000+** (e.g., `30110`, `30080`).
@@ -48,13 +48,32 @@ All user-facing documentation, web interfaces, and educational tools must implem
 
 ```
 grokbot/
-├── index.html          # Main interactive Bloom's Taxonomy web interface
-├── grok_bot.py         # Runnable first-principles xAI agent proof of concept
+├── index.html          # Main interactive guide: Bloom's taxonomy, install/usage,
+│                       # LinkedIn real-time playbook, evidence gallery
+├── src/
+│   └── grok_bot.py     # Runnable first-principles xAI agent proof of concept
+├── images/             # Phase-ordered evidence screenshots (NN-description.jpg)
+├── docs/
+│   └── REPORT.md       # Installation, file scan/rename, grouping, rationale report
 ├── .env.example        # Environment variable template (XAI_API_KEY)
+├── .gitignore          # Excludes venv/ and .env secrets
 ├── requirements.txt    # Python dependencies (openai, python-dotenv, requests)
 ├── README.md           # Project summary
 └── agents.md           # Coordinator rules and always remember mandates
 ```
+
+### File Grouping Convention
+- **`src/`** — all runnable code.
+- **`images/`** — evidence only, named `NN-kebab-case-description.jpg`, ordered by phase.
+- **`docs/`** — written reports and long-form prose.
+- **Root** — site entrypoint (`index.html`) and project config only.
+
+### Menu Grouping Convention
+Navigation must be grouped by purpose, not dumped as one flat list. The canonical groups are:
+1. **Guide** — Bloom levels 1–5 (Remember, Understand, Analyse, Evaluate, Create).
+2. **Install & Use** — install, usage, custom bots & plugins.
+3. **LinkedIn Playbook** — real-time rationale, daily routine, reply template.
+4. **Evidence** — screenshot gallery and reports.
 
 ---
 
@@ -71,5 +90,5 @@ python3 -m http.server 30110
 open -a "Google Chrome" http://localhost:30110/index.html
 
 # 4. Run GrokBot CLI
-python3 grok_bot.py "Explain quantum entanglement from first principles"
+python3 src/grok_bot.py "Explain quantum entanglement from first principles"
 ```
