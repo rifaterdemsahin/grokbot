@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GrokBot Fleet Roster — 20 Autonomous Bots</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #090b10;
+      --bg-card: rgba(18, 24, 38, 0.78);
+      --bg-card-hover: rgba(28, 38, 58, 0.95);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(0, 240, 255, 0.35);
+      --primary: #00f0ff;
+      --primary-dim: rgba(0, 240, 255, 0.12);
+      --accent: #a855f7;
+      --accent-dim: rgba(168, 85, 247, 0.15);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Fira Code', monospace;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --info: #3b82f6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(0, 240, 255, 0.07) 0%, transparent 45%),
+        radial-gradient(circle at 90% 70%, rgba(168, 85, 247, 0.08) 0%, transparent 45%),
+        linear-gradient(to bottom, #090b10, #0c1017);
+      min-height: 100vh;
+    }
+
+    /* Top Sticky Navigation */
+    header.top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(9, 11, 16, 0.88);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 2rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+      color: #090b10;
+      font-size: 1.1rem;
+      font-weight: 900;
+    }
+
+    .brand span.tag {
+      font-size: 0.65rem;
+      padding: 2px 7px;
+      background: var(--primary-dim);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      border-radius: 20px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    nav.nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    nav.nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav.nav-links a:hover, nav.nav-links a.active {
+      color: var(--primary);
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 3.5rem 1rem 2.5rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid var(--border-glow);
+      padding: 0.4rem 1.1rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #ffffff 40%, #9ca3af 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 800px;
+      margin: 0 auto 1.8rem;
+    }
+
+    /* Live Fleet Status Banner */
+    .fleet-status-banner {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 12px;
+      padding: 1.2rem 1.6rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+    }
+
+    .status-left {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .status-dot {
+      width: 12px;
+      height: 12px;
+      background: var(--success);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--success);
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .status-text h3 {
+      font-size: 1.05rem;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .status-text p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .status-stats {
+      display: flex;
+      gap: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.35rem 0.8rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      color: #fff;
+    }
+
+    /* Search & Filter Controls */
+    .controls-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 1rem 1.4rem;
+      border-radius: 14px;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 260px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.6rem 1rem 0.6rem 2.4rem;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+    }
+
+    .search-box span.search-icon {
+      position: absolute;
+      left: 0.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .filter-btn.active {
+      background: var(--primary-dim);
+      color: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+    }
+
+    /* Bot Grid */
+    .bot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .bot-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.4rem;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bot-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-glow);
+      background: var(--bg-card-hover);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .bot-card.cos {
+      border: 1px solid rgba(168, 85, 247, 0.5);
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(18, 24, 38, 0.85));
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
+    }
+
+    .bot-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .bot-identity {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .bot-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .bot-name-group h3 {
+      font-size: 1.05rem;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .bot-category {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--primary);
+    }
+
+    .bot-category.ops {
+      color: var(--accent);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--success);
+      font-family: var(--font-mono);
+      white-space: nowrap;
+    }
+
+    .status-badge.cos-active {
+      background: rgba(168, 85, 247, 0.15);
+      border-color: var(--accent);
+      color: #c084fc;
+    }
+
+    .bot-role {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 1.2rem;
+      flex-grow: 1;
+      line-height: 1.5;
+    }
+
+    .bot-meta-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 0.8rem;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+    }
+
+    .doc-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .doc-status.light {
+      color: var(--warning);
+    }
+
+    .doc-status.complete {
+      color: var(--success);
+    }
+
+    /* Architecture Explainer */
+    .arch-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.2rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .arch-section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    .arch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .arch-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.4rem;
+    }
+
+    .arch-card h4 {
+      font-size: 1.1rem;
+      color: var(--primary);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .arch-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Backup Section */
+    .backup-box {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(0, 240, 255, 0.04));
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-radius: 16px;
+      padding: 2.2rem;
+      margin-bottom: 3.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .backup-content h2 {
+      font-size: 1.6rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .backup-content p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      max-width: 700px;
+    }
+
+    .btn-backup {
+      background: linear-gradient(135deg, var(--accent), #9333ea);
+      color: #fff;
+      padding: 0.7rem 1.4rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-backup:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 2.5rem 1rem;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <header class="top-nav">
+    <a href="index.html" class="brand">
+      <div class="brand-icon">⚡</div>
+      <span>GrokBot</span>
+      <span class="tag">Fleet Roster</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="index.html">🏠 Main Guide</a>
+      <a href="index.html#remember">🧠 Bloom's Taxonomy</a>
+      <a href="roster.html" class="active">🤖 20 Bot Roster</a>
+      <a href="docs/GROK-BOTS-ROSTER.md">📄 Roster Spec</a>
+      <a href="docs/NOUS-RESEARCH-HERMES-INSTALL.md">🛡️ Hermes Backup</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-badge">
+        <span>⚡ 20 Autonomous Grok Bots</span>
+        <span>•</span>
+        <span>Single Host Multi-Desktop Architecture</span>
+      </div>
+      <h1>Active Grok Bot Roster</h1>
+      <p>
+        20 specialized agents operating in parallel on one shared computer. Each agent possesses its own sandboxed desktop, dedicated chat thread, and persistent sidebar hook.
+      </p>
+    </section>
+
+    <!-- Live Fleet Status Banner -->
+    <div class="fleet-status-banner">
+      <div class="status-left">
+        <div class="status-dot"></div>
+        <div class="status-text">
+          <h3>Fleet Status: All 20 Present &amp; Reachable</h3>
+          <p>Every bot is available in the sidebar; zero bots currently reporting an active blocking task.</p>
+        </div>
+      </div>
+      <div class="status-stats">
+        <div class="stat-pill">Total: <strong>20 Bots</strong></div>
+        <div class="stat-pill">Outreach: <strong>9 Bots</strong></div>
+        <div class="stat-pill">Ops: <strong>11 Bots</strong></div>
+        <div class="stat-pill">Coordinator: <strong>Chief of Staff</strong></div>
+      </div>
+    </div>
+
+    <!-- Search & Filter Controls -->
+    <div class="controls-bar">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="botSearch" placeholder="Search bot name, task, or keyword (e.g. Apify, WhatsApp, YouTube)..." onkeyup="filterBots()" />
+      </div>
+      <div class="filter-pills">
+        <button class="filter-btn active" onclick="setCategory('all', this)">All (20)</button>
+        <button class="filter-btn" onclick="setCategory('outreach', this)">Outreach &amp; LinkedIn (9)</button>
+        <button class="filter-btn" onclick="setCategory('ops', this)">Jobs &amp; Ops (11)</button>
+        <button class="filter-btn" onclick="setCategory('documented', this)">Detailed (10)</button>
+        <button class="filter-btn" onclick="setCategory('light', this)">Lightly Documented (10)</button>
+      </div>
+    </div>
+
+    <!-- Bot Cards Grid -->
+    <div class="bot-grid" id="botGrid">
+
+      <!-- Chief of Staff -->
+      <div class="bot-card cos" data-category="ops" data-doc="complete" data-keywords="chief of staff coordinator leadership orchestration management ops">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar" style="background: rgba(168, 85, 247, 0.2); border-color: var(--accent);">👑</div>
+            <div class="bot-name-group">
+              <h3>Chief Of Staff (me)</h3>
+              <div class="bot-category ops">Fleet Coordinator</div>
+            </div>
+          </div>
+          <span class="status-badge cos-active">● Active Coordinator</span>
+        </div>
+        <div class="bot-role">
+          Day-to-day coordination across all 19 worker bots. Monitors bottlenecks, delegates workflows, and surfaces status into the active control chat.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Master Chat / Control</span>
+          <span class="doc-status complete">● Fully Documented</span>
+        </div>
+      </div>
+
+      <!-- OUTREACH & LINKEDIN (9) -->
+      <div class="bot-card" data-category="outreach" data-doc="complete" data-keywords="linkedin contractor responses replies recruiter threads messages outreach">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">💼</div>
+            <div class="bot-name-group">
+              <h3>LinkedIn Contractor Responses</h3>
+              <div class="bot-category">Outreach &amp; LinkedIn</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          Monitors and crafts instant, context-aware replies to incoming recruiter and contractor threads.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status complete">● Fully Documented</span>
+        </div>
+      </div>
+
+      <div class="bot-card" data-category="outreach" data-doc="complete" data-keywords="linkedin followup agent unanswered messages connection requests post engagement outreach">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">🔁</div>
+            <div class="bot-name-group">
+              <h3>Linkedin Followup Agent</h3>
+              <div class="bot-category">Outreach &amp; LinkedIn</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          Systematically chases unanswered messages, stale connection requests, and pending post engagements.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status complete">● Fully Documented</span>
+        </div>
+      </div>
+
+      <div class="bot-card" data-category="outreach" data-doc="light" data-keywords="linkedin connector connection outreach networking recruiters hiring managers">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">🤝</div>
+            <div class="bot-name-group">
+              <h3>Linkedin Connector</h3>
+              <div class="bot-category">Outreach &amp; LinkedIn</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          Direct connection outreach targeted at high-value UK hiring leaders, tech recruiters, and engineering founders.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status light">▲ Lightly Documented</span>
+        </div>
+      </div>
+
+      <div class="bot-card" data-category="outreach" data-doc="light" data-keywords="linkedin research background intelligence company tech stack client diligence">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">🔬</div>
+            <div class="bot-name-group">
+              <h3>Linkedin Research</h3>
+              <div class="bot-category">Outreach &amp; LinkedIn</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          Automates background research on prospective clients, hiring managers, company tech stacks, and contract rates.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status light">▲ Lightly Documented</span>
+        </div>
+      </div>
+
+      <div class="bot-card" data-category="outreach" data-doc="light" data-keywords="linkedin job apply applications easy apply role submission cv">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">🎯</div>
+            <div class="bot-name-group">
+              <h3>Linkedin Job Apply</h3>
+              <div class="bot-category">Outreach &amp; LinkedIn</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          Executes tailored LinkedIn job applications, aligning profile strengths with target contract specs.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status light">▲ Lightly Documented</span>
+        </div>
+      </div>
+
+      <div class="bot-card" data-category="outreach" data-doc="complete" data-keywords="linkedin stats apify google drive telegram profile analytics weekday">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">📊</div>
+            <div class="bot-name-group">
+              <h3>Linkedin Stats</h3>
+              <div class="bot-category">Outreach &amp; LinkedIn</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          Weekday profile &amp; post stats pulled via Apify scrapers into Google Drive, with Telegram alert trigger on completion.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status complete">● Fully Documented</span>
+        </div>
+      </div>
+
+      <div class="bot-card" data-category="outreach" data-doc="complete" data-keywords="linkedin youtube posts drafts video rifat erdem sahin content creation">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">✍️</div>
+            <div class="bot-name-group">
+              <h3>Linkedin Youtube Posts</h3>
+              <div class="bot-category">Outreach &amp; LinkedIn</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          Every-other-day LinkedIn draft creator synthesizing insights from recent <code>@RifatErdemSahin</code> YouTube videos.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status complete">● Fully Documented</span>
+        </div>
+      </div>
+
+      <div class="bot-card" data-category="outreach" data-doc="light" data-keywords="linkedin youtube promote messages dm share tutorials outreach">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">📬</div>
+            <div class="bot-name-group">
+              <h3>Linkedin Youtube Promote o Messages</h3>
+              <div class="bot-category">Outreach &amp; LinkedIn</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          Promotes relevant YouTube engineering tutorials directly to warm connections via personalized LinkedIn messages.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status light">▲ Lightly Documented</span>
+        </div>
+      </div>
+
+      <div class="bot-card" data-category="outreach" data-doc="complete" data-keywords="youtube promotion on whatsapp timed broadcasts video blacklist deduplication">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">💬</div>
+            <div class="bot-name-group">
+              <h3>youtube promotion on whatsapp</h3>
+              <div class="bot-category">Outreach &amp; LinkedIn</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          Timed WhatsApp broadcasts of the latest YouTube videos featuring strict opt-out blacklist and no-double-send safeguards.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status complete">● Fully Documented</span>
+        </div>
+      </div>
+
+      <!-- JOBS & OPS (10 worker bots) -->
+      <div class="bot-card" data-category="ops" data-doc="complete" data-keywords="job portal applications uk contract jobserve google drive cwjobs">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">📑</div>
+            <div class="bot-name-group">
+              <h3>Job Portal Applications</h3>
+              <div class="bot-category ops">Jobs &amp; Ops</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          UK IT contract applications on JobServe and major portals; records full application receipts and logs to Google Drive.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status complete">● Fully Documented</span>
+        </div>
+      </div>
+
+      <div class="bot-card" data-category="ops" data-doc="complete" data-keywords="ms todo asistant hotmail microsoft todo github backup specs doc">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">✅</div>
+            <div class="bot-name-group">
+              <h3>Ms Todo Asistant</h3>
+              <div class="bot-category ops">Jobs &amp; Ops</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          Microsoft To Do task management for your Hotmail account; syncs GitHub repository backups and generates task specifications.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status complete">● Fully Documented</span>
+        </div>
+      </div>
+
+      <div class="bot-card" data-category="ops" data-doc="light" data-keywords="gmail asistant email triage inbox filtering mail assistance">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">📧</div>
+            <div class="bot-name-group">
+              <h3>Gmail asistant</h3>
+              <div class="bot-category ops">Jobs &amp; Ops</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          Inbox triage, automated labeling, draft assistance, and priority email filtering.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status light">▲ Lightly Documented</span>
+        </div>
+      </div>
+
+      <div class="bot-card" data-category="ops" data-doc="complete" data-keywords="cambridge and london ai events meetups networking tech conferences">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">🏛️</div>
+            <div class="bot-name-group">
+              <h3>Cambridge And London Ai Events</h3>
+              <div class="bot-category ops">Jobs &amp; Ops</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          Monitors, aggregates, and alerts on premium AI and machine learning events, symposiums, and meetups in Cambridge &amp; London.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status complete">● Fully Documented</span>
+        </div>
+      </div>
+
+      <div class="bot-card" data-category="ops" data-doc="light" data-keywords="grocery shopping runs supplies household logistics">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">🛒</div>
+            <div class="bot-name-group">
+              <h3>Grocery</h3>
+              <div class="bot-category ops">Jobs &amp; Ops</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          Coordinates household grocery shopping lists, recurring staples, and delivery scheduling.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status light">▲ Lightly Documented</span>
+        </div>
+      </div>
+
+      <div class="bot-card" data-category="ops" data-doc="complete" data-keywords="any desk manager mac mini remote desktop remote access status">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">🖥️</div>
+            <div class="bot-name-group">
+              <h3>Any Desk Manager</h3>
+              <div class="bot-category ops">Jobs &amp; Ops</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          Maintains AnyDesk sessions across hardware nodes (e.g. Mac mini), keeping IDs, credentials, and online status verified.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status complete">● Fully Documented</span>
+        </div>
+      </div>
+
+      <div class="bot-card" data-category="ops" data-doc="light" data-keywords="github coder coding development pull requests reviews git automation">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">💻</div>
+            <div class="bot-name-group">
+              <h3>Github Coder</h3>
+              <div class="bot-category ops">Jobs &amp; Ops</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          Handles code generation, PR drafting, automated tests, git rebasing, and repository health checks.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status light">▲ Lightly Documented</span>
+        </div>
+      </div>
+
+      <div class="bot-card" data-category="ops" data-doc="light" data-keywords="grokbot installs setup provisioning bootstrapping deployment">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">⚙️</div>
+            <div class="bot-name-group">
+              <h3>Grokbot Installs</h3>
+              <div class="bot-category ops">Jobs &amp; Ops</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          Automates Grok Bot instance provisioning, virtual environments, API credential setup, and prerequisite checks.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status light">▲ Lightly Documented</span>
+        </div>
+      </div>
+
+      <div class="bot-card" data-category="ops" data-doc="light" data-keywords="skool community platform members discussions student learning">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">🎓</div>
+            <div class="bot-name-group">
+              <h3>Skool</h3>
+              <div class="bot-category ops">Jobs &amp; Ops</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          Manages Skool community notifications, course student progress, discussion replies, and engagement analytics.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status light">▲ Lightly Documented</span>
+        </div>
+      </div>
+
+      <div class="bot-card" data-category="ops" data-doc="light" data-keywords="kingston ram hardware memory specs performance cache name only">
+        <div class="bot-card-top">
+          <div class="bot-identity">
+            <div class="bot-avatar">💾</div>
+            <div class="bot-name-group">
+              <h3>Kingston Ram</h3>
+              <div class="bot-category ops">Jobs &amp; Ops</div>
+            </div>
+          </div>
+          <span class="status-badge">● Reachable / Idle</span>
+        </div>
+        <div class="bot-role">
+          Hardware allocation and memory optimization module. <em>(Named placeholder in roster awaiting full role spec)</em>.
+        </div>
+        <div class="bot-meta-footer">
+          <span>🖥️ Dedicated Desktop</span>
+          <span class="doc-status light">▲ Lightly Documented</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- First Principles Architecture Explainer -->
+    <section class="arch-section">
+      <h2>🧠 First Principles: How 20 Bots Share 1 Physical Machine</h2>
+      <p style="color: var(--text-muted);">
+        Deconstructing the physical and computational bounds of running 20 autonomous agents without thermal throttling, port collision, or memory starvation.
+      </p>
+
+      <div class="arch-grid">
+        <div class="arch-card">
+          <h4>⚡ Event-Driven Idle vs Polling</h4>
+          <p>
+            Zero continuous spin-loops. When bots aren't handling an inbound recruiter ping or scheduled Apify run, their process sleeps. RAM overhead is pinned to static state (~150MB per desktop instance).
+          </p>
+        </div>
+        <div class="arch-card">
+          <h4>🚪 Port Isolation (30,000+ Rule)</h4>
+          <p>
+            Every web preview and API dashboard runs on designated ports above 30,000+ (e.g. <code>30110</code>, <code>30080</code>), preventing collision with macOS system daemons and AnyDesk.
+          </p>
+        </div>
+        <div class="arch-card">
+          <h4>🛡️ Sandboxed Virtual Desktops</h4>
+          <p>
+            Each bot occupies its own virtual display workspace and distinct chat context. UI automation, browser tabs, and terminal runs do not cross-contaminate.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Backup Option Section (Nous Research Hermes Desktop) -->
+    <section class="backup-box">
+      <div class="backup-content">
+        <h2>🛡️ Backup Agent Architecture: Nous Research Hermes Desktop</h2>
+        <p>
+          Need resilient local failover if cloud APIs experience quota limits or latency? We have installed and built <strong>Hermes Desktop</strong> on this machine (<code>~/Applications/Hermes.app</code>). It shares workspace state and runs multi-agent pipelines with local or alternate providers.
+        </p>
+      </div>
+      <div>
+        <a href="docs/NOUS-RESEARCH-HERMES-INSTALL.md" class="btn-backup">
+          <span>📖 View Hermes Install Guide</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      GrokBot Fleet Architecture • 20 Autonomous Agents • Built for Rifat Erdem Sahin<br>
+      <a href="index.html">← Back to Main GrokBot Guide</a> • <a href="docs/GROK-BOTS-ROSTER.md">View Markdown Specification</a>
+    </p>
+  </footer>
+
+  <script>
+    let activeCategory = 'all';
+
+    function setCategory(cat, btn) {
+      activeCategory = cat;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterBots();
+    }
+
+    function filterBots() {
+      const q = document.getElementById('botSearch').value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.bot-card');
+
+      cards.forEach(card => {
+        const category = card.dataset.category;
+        const doc = card.dataset.doc;
+        const keywords = (card.dataset.keywords || '').toLowerCase();
+        const text = card.innerText.toLowerCase();
+
+        let matchesCat = true;
+        if (activeCategory === 'outreach') matchesCat = (category === 'outreach');
+        else if (activeCategory === 'ops') matchesCat = (category === 'ops');
+        else if (activeCategory === 'documented') matchesCat = (doc === 'complete');
+        else if (activeCategory === 'light') matchesCat = (doc === 'light');
+
+        const matchesQuery = !q || text.includes(q) || keywords.includes(q);
+
+        if (matchesCat && matchesQuery) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
